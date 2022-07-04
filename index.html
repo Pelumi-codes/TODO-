@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width='device-width', initial-scale=1.0" />
+    <title>Jquery project</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="cont-todo">
+      <div id="task-todo">
+        <input name="todo" id="to-do" />
+        <button id="btn" onclick="handleIncrement()">Click me</button>
+      </div>
+      <div id="tasks"></div>
+    </div>
+    <script>
+      let count = 0;
+      // function to delete todo list
+      function myButton(e) {
+        console.log("We are here !!" + e);
+        // const btn= document.getElementsByClassName('list').innerHTML;
+        let clickedButton = document.getElementById("tasks");
+        let inputVal = document.getElementsByClassName("taskLists" + e);
+        console.log("getting taask...");
+        console.log(inputVal);
+        //clickedButton.remove(inputVal);
+        let removeTaskId = "#taskLists" + e;
+        $(removeTaskId).remove();
+      }
+      //console.log(myButton())
+      // function to strikethrough done task
+      function doneTask(e) {
+        $("#taskLists" + e).css("text-decoration", "line-through");
+        console.log("done");
+      }
+
+      $(document).ready(function () {
+        function handleIncrement() {
+          //if input field is empty
+          document.getElementById("btn").onclick = function () {
+            if (document.getElementById("to-do").value == " ") {
+              alert("input a task");
+            }
+
+            //append the input to the task container
+            else {
+              let input = document.getElementById("to-do");
+              const text = input.value.trim();
+              input.value = " ";
+
+              count++;
+              let countAddition = document.getElementById("countAdd");
+              if (countAddition) {
+                countAddition.innerHTML = count;
+              }
+
+              document.getElementById("tasks").innerHTML += `
+                        <div class="taskLists" id="taskLists${count}" attr="taskLists${count}">
+                                <h2 class='list' id="list${count}">
+                                    ${text}
+                                </h2>
+                                <button id="done" class="done" onclick="doneTask(${count})">Done</button>
+                                <button class="myBtn" 
+                                    onclick="myButton(${count})" >
+                                    <i class="fa fa-remove"></i>
+                                </button>
+                        </div> 
+                    `;
+            }
+          };
+        }
+        console.log(handleIncrement());
+      });
+    </script>
+  </body>
+</html>
